@@ -16,7 +16,9 @@
 	}
 </script>
 
-<EntryModal />
+<div>
+	<EntryModal />
+</div>
 <Greetings />
 <!-- Entries -->
 <section class="container px-4 py-3">
@@ -34,7 +36,11 @@
 	<div class="list-group mb-3">
 		<!-- Individual Entries -->
 		{#await getEntries()}
-			<p>Fetching data...</p>
+			<div class="loader">
+				<span></span>
+				<span></span>
+				<span></span>
+			</div>
 		{:then data}
 			{#each data as entry}
 				<Entry
@@ -54,3 +60,34 @@
 <section class="container px-4 py-3 text-center">
 	<button class="btn btn-secondary" on:click={signOut}>Logout</button>
 </section>
+
+<style>
+	.loader {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+	}
+
+	.loader > span {
+		display: inline-block;
+		background-color: purple;
+		width: 16px;
+		height: 16px;
+		border-radius: 50%;
+		margin: 0 8px;
+		animation: bounce 0.6s infinite alternate;
+	}
+
+	.loader > span:nth-child(2) {
+		background-color: palevioletred;
+	}
+
+	@keyframes bounce {
+		to {
+			width: 16px;
+			height: 16px;
+			transform: translate3d(0, -16px, 0);
+		}
+	}
+</style>
+
